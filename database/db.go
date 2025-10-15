@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 
+	"example.com/rest-api/helper"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -12,9 +13,7 @@ func InitDb() {
 	var err error
 	DB, err = sql.Open("sqlite3", "api.db")
 
-	if err != nil {
-		panic("Could not connect to database")
-	}
+	helper.PanicError(err, "Could not connect to database")
 
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
@@ -36,7 +35,5 @@ func createTables() {
 
 	_, err := DB.Exec(createEventsTables)
 
-	if err != nil {
-		panic("Could not create events table")
-	}
+	helper.PanicError(err, "Could not create events table")
 }

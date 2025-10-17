@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	db "example.com/rest-api/database"
@@ -56,6 +57,23 @@ func (e Event) Update() error {
 
 	return err
 
+}
+
+func (e Event) Delete() error {
+	query := `DELETE FROM events WHERE Id = ?`
+
+	stmt, err := db.DB.Prepare(query)
+	fmt.Println(stmt)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(e.Id)
+
+	return err
 }
 
 func GetEventById(id int64) (*Event, error) {

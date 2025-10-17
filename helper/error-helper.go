@@ -2,7 +2,6 @@ package helper
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,11 +14,12 @@ func PanicError(err error, msg string) {
 	}
 }
 
-func ContextErrors(err error, context *gin.Context, msg string) {
+func ContextErrors(err error, context *gin.Context, statusCode int, msg string) bool {
 	if err != nil {
 		fmt.Println("---------------------")
 		fmt.Println(err)
-		context.JSON(http.StatusInternalServerError, gin.H{"message": msg})
-		return
+		context.JSON(statusCode, gin.H{"message": msg})
+		return true
 	}
+	return false
 }

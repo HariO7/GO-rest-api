@@ -41,7 +41,6 @@ func createEvents(context *gin.Context) {
 	}
 
 	event.Id = 1
-	event.UserId = 1
 	err = event.Save()
 	if helper.ContextErrors(err, context, http.StatusInternalServerError, "An error occured") {
 		return

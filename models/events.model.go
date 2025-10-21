@@ -5,6 +5,7 @@ import (
 	"time"
 
 	db "example.com/rest-api/database"
+	"github.com/google/uuid"
 )
 
 type Event struct {
@@ -13,7 +14,7 @@ type Event struct {
 	Description string `binding:"required"`
 	Location    string `binding:"required"`
 	Date        time.Time
-	UserId      int
+	UserId      uuid.UUID
 }
 
 func (e Event) Save() error {

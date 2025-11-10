@@ -37,6 +37,11 @@ func login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"message": "Login successful"})
+	token, err := helper.GenerateTokens(user.Email, user.Id.String())
+	if helper.ContextErrors(err, context, http.StatusInternalServerError, "Invalid Tokens") {
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "Login successful", "token": token})
 
 }
